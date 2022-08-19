@@ -1,0 +1,100 @@
+---
+title: "machine learning Assignment"
+author: "Rabina"
+date: "2022-08-12"
+output: html_document
+---
+```{r}
+library(ISLR)
+```
+
+
+##1. This exercise involves the Auto data set studied in the lab. Make sure that the missing values have been removed from the data.
+
+```{r}
+df = data.frame(Auto)
+df
+```
+
+###(a) Which of the predictors are quantitative, and which are qualitative?
+    
+```{r}
+str(df)
+```
+
+```{r}
+summary(df)
+```
+    
+    It is seen that only "Name" has non numeric values, also "Cylinders" and "Origin" seems to be Categorical
+       
+```{r}
+unique(df$origin)
+unique(df$cylinders)
+```
+ 
+    "name", "cylinders" and "origin" are Qualitative Predictors 
+    All other variables are Quantitavive Predictors.
+
+
+
+###(b) What is the range of each quantitative predictor? You can answer this using the range() function. 
+
+###Sapply() function
+
+     sapply() function takes list, vector or data frame as input and gives output in vector or matrix. It is useful for operations on list objects and returns a list object of same length of original set. Sapply function in R does the same job as lapply() function but returns a vector.
+
+```{r}
+####New variable "num" contains all the Quantitative predictors.
+num <- sapply(Auto, is.numeric)
+num
+```
+
+```{r}
+sapply(df[, num], range)
+```
+
+####(c) What is the mean and standard deviation of each quantitative predictor? 
+
+```{r}
+##Mean
+
+sapply(df[,num], mean)
+```
+```{r}
+##Standard Deviation
+sapply(df[,num], sd)
+```
+
+####(d)	 Now remove the 10th through 85th observations. What is the range, mean, and standard deviation of each predictor in the subset of the data that remains? 
+
+```{r}
+newrange <- sapply(df[-10:-85, num],range)
+newsd <- sapply(df[-10:-85, num],sd)
+newmean <- sapply(df[-10:-85, num],mean)
+```
+
+```{r}
+###Range
+newrange
+```
+```{r}
+###Mean
+newmean
+```
+
+```{r}
+###Standard Deviation
+newsd
+```
+
+####(e)	Using the full data set, investigate the predictors graphically, using scatterplots or other tools of your choice. Create some plots highlighting the relationships among the predictors. Comment on your findings.
+
+```{r}
+pairs(df)
+```
+
+
+####(f) Suppose that we wish to predict gas mileage (mpg) on the basis of the other variables. Do your plots suggest that any of the other variables might be useful in predicting mpg? Justify your answer.
+  Yes; we see variables with both positive and negative relationships to the mpg outcome. For example, year and mpg appear to have a positive relationship (as the year increases, the mpg also tends to increase), while horsepower and mpg appear to have a negative relationship (as the horsepower increases, the mpg tends to decrease)
+
